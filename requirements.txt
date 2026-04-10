@@ -1,0 +1,6 @@
+supabase
+requests
+beautifulsoup4
+huggingface_hub
+urllib3
+lxml
