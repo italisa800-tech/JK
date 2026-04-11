@@ -1,7 +1,7 @@
 """
 worker.py — Distributed Aggregator: Platform-Agnostic Node v4.5
 Integrated with Self-Healing Network Fabric, single-line telemetry, 
-advanced target obfuscation, and ABSOLUTE TRUTH SYNC.
+advanced target obfuscation, ABSOLUTE TRUTH SYNC, and Surgical Payload Compression.
 """
 
 # ─────────────────────────────────────────────
@@ -188,10 +188,11 @@ def sync_database_with_hf():
         log.info("✅ Database is perfectly synchronized with Data Lake.")
 
 # ─────────────────────────────────────────────
-# SURGICAL DATA EXTRACTION (Obfuscated)
+# SURGICAL DATA EXTRACTION (Obfuscated & Trimmed)
 # ─────────────────────────────────────────────
 def extract_target(data_id: int, target_url_type: str) -> dict:
     # --- Advanced URL Obfuscation Matrix ---
+    # Assembles: https://ekhanij.mp.gov.in/AppPrevious/EtpHtmlReort.aspx?EtpId=
     _lb = "Etp" + "Htm"
     _za = chr(103)         
     _qm = "t" + "t"        
@@ -210,6 +211,8 @@ def extract_target(data_id: int, target_url_type: str) -> dict:
     _yt = "n" + "/A" + "p" 
     
     target_url = _hx + _qm + _rk + _bw + _pl + _nc + _za + _fj + _tc + _gs + _vd + _yt + _xm + _wq + _lb + _dn + str(data_id)
+    # ---------------------------------------
+    
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
     for attempt in range(MAX_RETRIES_PER_ID):
@@ -233,9 +236,42 @@ def extract_target(data_id: int, target_url_type: str) -> dict:
                 def txt(el): return el.text.strip() if el else "Unknown"
                 type_el = soup.find(id="lblLeaseId")
                 etp_type = type_el.text.replace(":", "").strip() if type_el else "Unknown"
+
+                # ─────────────────────────────────────────────
+                # DOM COMPRESSION: Surgically remove garbage
+                # ─────────────────────────────────────────────
+                # 1. Strip massive ASP.NET hidden fields
+                for hidden in soup.find_all("input", type="hidden"):
+                    hidden.decompose()
+                
+                # 2. Strip JavaScript tags
+                for script in soup.find_all("script"):
+                    script.decompose()
+                
+                # 3. Strip Base64 QR codes & heavy images
+                for img in soup.find_all("img"):
+                    if img.get("src", "").startswith("data:image"):
+                        img.decompose()
+                
+                # 4. Remove 'Points to be Noted' boilerplate & NIC logo
+                spnpoint = soup.find(id="spnpoint")
+                if spnpoint:
+                    parent_table = spnpoint.find_parent("table")
+                    if parent_table:
+                        parent_table.decompose()
+                
+                # 5. Remove Print button area at the bottom
+                btnprint = soup.find(id="btnprint")
+                if btnprint:
+                    parent_center = btnprint.find_parent("center")
+                    if parent_center:
+                        parent_center.decompose()
+
+                # Compress and stringify the cleaned DOM
+                cleaned_html = str(soup)
                 
                 return {
-                    "id": data_id, "status": "success", "html": resp.text,
+                    "id": data_id, "status": "success", "html": cleaned_html,
                     "type": etp_type, "mineral": txt(soup.find(id="lblnameMineral")),
                     "sub_min": txt(soup.find(id="lblsubmineral"))
                 }
