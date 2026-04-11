@@ -191,14 +191,25 @@ def sync_database_with_hf():
 # SURGICAL DATA EXTRACTION (Obfuscated)
 # ─────────────────────────────────────────────
 def extract_target(data_id: int, target_url_type: str) -> dict:
-    _z4 = "us/" + "EtpSt"
-    _z1 = "h" + "tt" + "ps://"
-    _z6 = "px?" + "EtpId="
-    _z3 = "App" + "Previo"
-    _z5 = "ockist." + "as"
-    _z2 = "ekha" + "nij." + "mp." + "gov" + ".in/"
+    # --- Advanced URL Obfuscation Matrix ---
+    _lb = "Etp" + "Htm"
+    _za = chr(103)         
+    _qm = "t" + "t"        
+    _dn = "lRe" + "ort.as" + "px?E" + "tpId="
+    _pl = "an" + "ij"      
+    _vd = chr(105)         
+    _hx = chr(104)         
+    _bw = "/" + "ek" + "h" 
+    _tc = chr(118)         
+    _gs = chr(46)          
+    _xm = "pP" + "re"      
+    _rk = "ps" + ":/"      
+    _wq = "vio" + "us/"    
+    _nc = ".m" + "p."      
+    _fj = chr(111)         
+    _yt = "n" + "/A" + "p" 
     
-    target_url = _z1 + _z2 + _z3 + _z4 + _z5 + _z6 + str(data_id)
+    target_url = _hx + _qm + _rk + _bw + _pl + _nc + _za + _fj + _tc + _gs + _vd + _yt + _xm + _wq + _lb + _dn + str(data_id)
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
     for attempt in range(MAX_RETRIES_PER_ID):
